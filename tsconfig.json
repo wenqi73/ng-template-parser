@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "target": "es5",
+        "moduleResolution": "classic",
+        "lib": [
+            "es2017"
+        ]
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}
