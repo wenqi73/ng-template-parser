@@ -4,7 +4,9 @@ export class Lexer {
   ch;
   tokens;
 
-  lex(text) {
+  constructor() {}
+
+  lex(text: any) {
     // Tokenization will be done here
     this.text = text;
     this.index = 0;
@@ -14,15 +16,29 @@ export class Lexer {
     while (this.index < this.text.length) {
       this.ch = this.text.charAt(this.index);
       if (this.isNumber(this.ch)) {
-        this.tokens.push({
-          text: this.ch,
-          value: Number(this.ch)
-        })
+        this.readNumber();
       }
     }
+
+    return this.tokens;
   }
 
-  isNumber(ch) {
+  isNumber(ch: string) {
     return '0' <= ch && ch <= '9';
-  };
+  }
+
+  readNumber() {
+    let number = '';
+    while (this.index < this.text.length) {
+      const ch = this.text.charAt(this.index).toLowerCase();
+      if (this.isNumber(ch)) {
+        number += ch;
+      }
+      this.index++;
+    }
+    this.tokens.push({
+      text: number,
+      value: Number(number)
+    });
+  }
 }

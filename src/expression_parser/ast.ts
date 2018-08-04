@@ -1,3 +1,10 @@
+import { Lexer } from "./lexer";
+
+interface AstProgram {
+  type: string;
+  value: any;
+}
+
 export class AST {
   static Program = 'Program';
   static Literal = 'Literal';
@@ -17,32 +24,48 @@ export class AST {
 
   lexer;
   tokens;
-  constructor(lexer) {
-    this.lexer = lexer
+  constructor(lexer: Lexer) {
+    this.lexer = lexer;
   }
 
-  ast(text) {
+  ast(text: any) {
     this.tokens = this.lexer.lex(text);
-    // return this.program();
+    return this.program();
+  }
+
+  constant() {
+    return { type: AST.Literal, value: this.tokens[0].value };
   }
 
   program() {
-    const body = [];
-    while (true) {
-      if (this.tokens.length) {
-        // body.push(this.filter());
-      }
-      if (1 === 1) {
-        return { type: AST.Program, body: body };
-      }
-    }
+    return { type: AST.Program, body: this.constant() };
   }
 }
 
 export class ASTCompiler {
   astBuilder;
-  constructor(astBuilder) {
+  state;
+  constructor(astBuilder: AST) {
     this.astBuilder = astBuilder;
-    console.log(this.astBuilder);
+  }
+
+  compile(text: any) {
+    const ast = this.astBuilder.ast(text);
+    this.state = { body: [] };
+    console.log(ast);
+    this.recurse(ast);
+    return new Function(this.state.body.join(''));
+  }
+
+  recurse(ast: any) {
+    switch (ast.type) {
+      case AST.Program:
+        this.state.body.push('return ', this.recurse(ast.body), ';');
+        break;
+      case AST.Literal:
+        return ast.value;
+      default:
+        break;
+    }
   }
 }
