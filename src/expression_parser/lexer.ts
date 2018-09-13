@@ -24,7 +24,7 @@ export class Lexer {
   }
 
   isNumber(ch: string) {
-    return '0' <= ch && ch <= '9';
+    return ch >= '0' && ch <= '9';
   }
 
   readNumber() {

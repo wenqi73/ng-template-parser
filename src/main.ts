@@ -1,7 +1,7 @@
 import { Lexer } from './expression_parser/lexer';
 import { Parser } from './expression_parser/parser';
 
-function parse(expr: any) {
+export function parse(expr: any) {
   switch (typeof expr) {
     case 'string':
       const lexer = new Lexer();
@@ -13,5 +13,5 @@ function parse(expr: any) {
   }
 }
 
-const foo = parse('12345');
+const foo = parse('12345.222');
 console.log(foo());

@@ -1,4 +1,4 @@
-import { Lexer } from "./lexer";
+import { Lexer } from './lexer';
 
 interface AstProgram {
   type: string;
