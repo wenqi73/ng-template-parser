@@ -1,6 +1,6 @@
 // var publishExternalAPI = require('../src/angular_public');
 // var createInjector = require('../src/injector');
-import * as _ from 'lodash';
+// import * as _ from 'lodash';
 import { parse } from '../src/main';
 
 describe('parse', function() {
@@ -11,7 +11,7 @@ describe('parse', function() {
   });
 
   it('can parse an integer', function() {
-    let fn = parse('42');
+    const fn = parse('42');
     expect(fn).toBeDefined();
     expect(fn()).toBe(42);
   });
