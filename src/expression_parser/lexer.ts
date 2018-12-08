@@ -13,9 +13,12 @@ export class Lexer {
     this.ch = undefined;
     this.tokens = [];
 
+    // why recurse twice ?
     while (this.index < this.text.length) {
       this.ch = this.text.charAt(this.index);
-      if (this.isNumber(this.ch)) {
+      if ((this.ch === '.' && this.isNumber(this.peek()))
+          || this.isNumber(this.ch)
+         ) {
         this.readNumber();
       }
     }
@@ -31,7 +34,7 @@ export class Lexer {
     let number = '';
     while (this.index < this.text.length) {
       const ch = this.text.charAt(this.index).toLowerCase();
-      if (this.isNumber(ch)) {
+      if (ch === '.' || this.isNumber(ch)) {
         number += ch;
       }
       this.index++;
@@ -40,5 +43,15 @@ export class Lexer {
       text: number,
       value: Number(number)
     });
+  }
+
+  /**
+   * return next character in the text,
+   * if there is no next character, return false.
+   */
+  peek() {
+    return this.index < this.text.length - 1 ?
+           this.text.charAt(this.index + 1) :
+           false;
   }
 }

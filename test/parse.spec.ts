@@ -15,4 +15,12 @@ describe('parse', function() {
     expect(fn).toBeDefined();
     expect(fn()).toBe(42);
   });
+
+  it('can parse a floating point number', function() {
+    let fn = parse('4.2');
+    expect(fn()).toBe(4.2);
+
+    fn = parse('.42');
+    expect(fn()).toBe(0.42);
+  });
 });
